@@ -1,0 +1,19 @@
+{
+  "lgb": {
+    "learning_rate": 0.021603153815335133,
+    "num_leaves": 30,
+    "max_depth": 9,
+    "subsample": 0.8153290355629563,
+    "colsample_bytree": 0.7474955208672271,
+    "reg_alpha": 1.1347627161594764,
+    "reg_lambda": 0.21152479504191202,
+    "min_child_samples": 49
+  },
+  "cat": {
+    "learning_rate": 0.033760244014423596,
+    "depth": 8,
+    "l2_leaf_reg": 3.8116989476015624,
+    "bagging_temperature": 0.9013733300130995,
+    "random_strength": 0.047360572754169494
+  }
+}

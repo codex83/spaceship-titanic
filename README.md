@@ -26,15 +26,26 @@ Total spend, HomePlanet, and cabin location dominate the model's decisions — c
 ## Pipeline
 
 ```mermaid
-flowchart LR
-    A[Raw train/test CSVs] --> B[Feature engineering]
-    B --> C[Group & family imputation]
-    C --> D[Out-of-fold target encoding]
-    D --> E[Optuna hyperparameter search]
-    E --> F["Model training\n(LightGBM · XGBoost · CatBoost)"]
-    F --> G[Group-aware 5-fold CV]
-    G --> H[3-seed bagged predictions]
-    H --> I[submission.csv]
+flowchart TD
+    subgraph row1[" "]
+        direction LR
+        A[Raw train/test CSVs] --> B[Feature engineering] --> C[Group & family imputation]
+    end
+    subgraph row2[" "]
+        direction LR
+        D[Out-of-fold target encoding] --> E[Optuna hyperparameter search] --> F["Model training (LightGBM · XGBoost · CatBoost)"]
+    end
+    subgraph row3[" "]
+        direction LR
+        G[Group-aware 5-fold CV] --> H[3-seed bagged predictions] --> I[submission.csv]
+    end
+
+    C --> D
+    F --> G
+
+    style row1 fill:transparent,stroke:transparent
+    style row2 fill:transparent,stroke:transparent
+    style row3 fill:transparent,stroke:transparent
 ```
 
 **Feature engineering** — group and family structure extracted from `PassengerId` and `Name`; cabin deck, side, and region parsed from `Cabin`; per-category spend ratios and a luxury-spend ratio; group-level spend and CryoSleep aggregates; group/family-based imputation for missing `HomePlanet` and `Destination`; CryoSleep imputed from spend patterns, since cryosleeping passengers spend nothing.

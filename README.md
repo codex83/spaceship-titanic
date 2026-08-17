@@ -13,19 +13,37 @@ A solution to Kaggle's [Spaceship Titanic](https://www.kaggle.com/competitions/s
 | **Final model** | CatBoost, 3-seed bagged |
 | **Validation strategy** | Group-aware 5-fold CV |
 
+## Contents
+
+- [Results](#results)
+- [Pipeline](#pipeline)
+- [Approaches that were tested and discarded](#approaches-that-were-tested-and-discarded)
+- [Misclassification analysis](#misclassification-analysis)
+- [Repository structure](#repository-structure)
+- [Reproducing this](#reproducing-this)
+
 ## Results
 
-<img src="assets/model_comparison.png" width="620" alt="Model comparison chart">
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/model_comparison_dark.png">
+  <img src="assets/model_comparison.png" width="620" alt="Model comparison chart">
+</picture>
 
 CatBoost was tuned with Optuna and evaluated against LightGBM, XGBoost, and a PyTorch neural network under identical cross-validation, and came out ahead on every fold.
 
-<img src="assets/feature_importance.png" width="620" alt="Feature importance chart">
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/feature_importance_dark.png">
+  <img src="assets/feature_importance.png" width="620" alt="Feature importance chart">
+</picture>
 
 Total spend, HomePlanet, and cabin location dominate the model's decisions — consistent with the underlying premise of the dataset, where cabin location and CryoSleep status determine passengers' exposure to the anomaly.
 
 ## Pipeline
 
-<img src="assets/pipeline.png" width="700" alt="Pipeline diagram">
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/pipeline_dark.png">
+  <img src="assets/pipeline.png" width="700" alt="Pipeline diagram">
+</picture>
 
 **Feature engineering** — group and family structure extracted from `PassengerId` and `Name`; cabin deck, side, and region parsed from `Cabin`; per-category spend ratios and a luxury-spend ratio; group-level spend and CryoSleep aggregates; group/family-based imputation for missing `HomePlanet` and `Destination`; CryoSleep imputed from spend patterns, since cryosleeping passengers spend nothing.
 
@@ -46,7 +64,10 @@ Total spend, HomePlanet, and cabin location dominate the model's decisions — c
 
 ## Misclassification analysis
 
-<img src="assets/misclassification_segments.png" width="620" alt="Misclassification analysis by segment">
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/misclassification_segments_dark.png">
+  <img src="assets/misclassification_segments.png" width="620" alt="Misclassification analysis by segment">
+</picture>
 
 Segmenting errors by `HomePlanet × CryoSleep` reveals a clear, non-random pattern in where the model struggles. For Europa and Mars, CryoSleep is a near-deterministic predictor of the outcome, and the model exploits it almost perfectly. For Earth passengers in CryoSleep — 16% of the dataset — the outcome is close to even odds, and the model can barely beat the base rate. Comparing predicted probabilities against actual rates within that segment shows the model has already extracted what weak signal exists there (e.g. cabin side, destination). This segment appears to be the effective accuracy ceiling for the dataset as a whole.
 
@@ -62,7 +83,7 @@ Segmenting errors by `HomePlanet × CryoSleep` reveals a clear, non-random patte
 ├── make_pipeline_diagram.py  # regenerates the pipeline diagram in assets/
 ├── best_params.json    # tuned hyperparameters
 ├── submission.csv      # final Kaggle submission
-└── assets/              # README charts
+└── assets/              # README charts (light + dark variants)
 ```
 
 ## Reproducing this

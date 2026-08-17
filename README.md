@@ -6,8 +6,6 @@
 
 A solution to Kaggle's [Spaceship Titanic](https://www.kaggle.com/competitions/spaceship-titanic) competition — a binary classification task predicting which passengers were transported to an alternate dimension during an anomaly encounter.
 
-See [PROJECT_LOG.md](PROJECT_LOG.md) for the full story of how this solution was built, including the dead ends.
-
 | | |
 |---|---|
 | **Public leaderboard score** | 0.80383 |

@@ -86,6 +86,8 @@ for y, label in zip(ROW_Y, ["1. Data & features", "2. Tuning & training", "3. Ev
     ax.text(-0.9, y + BOX_H / 2 + 0.28, label, ha="left", va="bottom",
              fontsize=9.5, color="#888888", fontweight="bold", style="italic")
 
+fig.patch.set_alpha(0)
+ax.patch.set_alpha(0)
 plt.tight_layout()
-plt.savefig("assets/pipeline.png", dpi=180, bbox_inches="tight", facecolor="white")
+plt.savefig("assets/pipeline.png", dpi=180, bbox_inches="tight", transparent=True)
 print("Saved assets/pipeline.png")

@@ -33,7 +33,7 @@ edges_within = [("A", "B"), ("B", "C"), ("D", "E"), ("E", "F"), ("G", "H"), ("H"
 edges_between = [("C", "D"), ("F", "G")]
 
 fig, ax = plt.subplots(figsize=(10.5, 6.2))
-ax.set_xlim(-0.9, COL_X[2] + BOX_W / 2 + 0.9)
+ax.set_xlim(COL_X[0] - BOX_W / 2 - 0.35, COL_X[2] + BOX_W / 2 + 0.35)
 ax.set_ylim(-0.6, ROW_Y[0] + BOX_H / 2 + 0.6)
 ax.axis("off")
 ax.set_aspect("equal")
@@ -83,7 +83,7 @@ for n1, n2 in edges_between:
 
 # row labels
 for y, label in zip(ROW_Y, ["1. Data & features", "2. Tuning & training", "3. Evaluation & output"]):
-    ax.text(-0.9, y + BOX_H / 2 + 0.28, label, ha="left", va="bottom",
+    ax.text(COL_X[0] - BOX_W / 2, y + BOX_H / 2 + 0.28, label, ha="left", va="bottom",
              fontsize=9.5, color="#888888", fontweight="bold", style="italic")
 
 fig.patch.set_alpha(0)
